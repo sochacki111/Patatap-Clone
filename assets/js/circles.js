@@ -9,12 +9,21 @@ window.onload = function() {
     paper.setup(CANVAS);
     var myCircle = new Path.Circle(generateRandomPoint(), 50);
     myCircle.fillColor = 'red';
-    paper.view.draw();
 };
 
 function generateRandomPoint() {
-    let canvasHeight = CANVAS.height;
     let canvasWidth = CANVAS.width;
+    let canvasHeight = CANVAS.height;
+    let x = Math.ceil(Math.random() * canvasWidth);
+    let y = Math.ceil(Math.random() * canvasHeight);
 
-    return new Point(100,100);
+    return new Point(x,y);
+}
+
+function generateRandomColor() {
+
+}
+
+function generateRandomCircleSize() {
+    
 }
