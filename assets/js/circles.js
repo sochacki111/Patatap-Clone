@@ -1,6 +1,8 @@
 const CANVAS = document.getElementById('myCanvas');
 const MIN_CIRCLE_RADIUS = 50;
 const MAX_CIRCLE_RADIUS = 250;
+const CIRCLE_COLOR_HUE = 7;
+const CIRCLE_SCALE = 0.98;
 
 // Register a hander for when a DOM is ready, since we cannot work with the canvas before that
 window.onload = function() {
@@ -9,8 +11,28 @@ window.onload = function() {
      */
     paper.install(window);
     paper.setup(CANVAS);
-    generateRandomCircle();
 };
+
+document.addEventListener('keypress', function(event) {
+    console.log(event.code);
+    console.log(event.charCode);
+    if (event.charCode >= 97 && event.charCode <= 122) {
+        generateRandomCircle();
+    }
+});
+
+function generateRandomCircle() {
+    let circle = new Path.Circle(
+        generateRandomPoint(),
+        generateRandomCircleRadius()
+    );
+    circle.fillColor = Color.random();
+    // Each frame, change the fill color of the circle
+    circle.onFrame = function(event) {
+        circle.fillColor.hue += CIRCLE_COLOR_HUE;
+        circle.scale(CIRCLE_SCALE);
+    };
+}
 
 function generateRandomPoint() {
     let canvasWidth = CANVAS.width;
@@ -26,12 +48,4 @@ function generateRandomCircleRadius() {
     let r = Math.ceil(Math.random() * MAX_CIRCLE_RADIUS + MIN_CIRCLE_RADIUS);
 
     return r;
-}
-
-function generateRandomCircle() {
-    let circle = new Path.Circle(
-        generateRandomPoint(),
-        generateRandomCircleRadius()
-    );
-    circle.fillColor = Color.random();
 }
